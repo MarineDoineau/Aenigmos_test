@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{{ question.text }}</h2>
+
+<form method="POST">
+    {% for key, value in question.choices.items() %}
+        <div>
+            <input type="radio" name="answer" value="{{ key }}" required>
+            <label>{{ value }}</label>
+        </div>
+    {% endfor %}
+    <br>
+    <button type="submit">Suivant</button>
+</form>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Résultat personnalisé</h2>
+<p>{{ recommendation }}</p>
+
+<h3>Vos réponses :</h3>
+<ul>
+    {% for key, value in answers.items() %}
+        <li>{{ key }} : {{ value }}</li>
+    {% endfor %}
+</ul>
+
+<a href="{{ url_for('home') }}">
+    <button>Recommencer</button>
+</a>
+{% endblock %}

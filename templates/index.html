@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Questionnaire Ultra Personnalisé</h1>
+<a href="{{ url_for('question', question_id='q1') }}">
+    <button>Commencer</button>
+</a>
+{% endblock %}
