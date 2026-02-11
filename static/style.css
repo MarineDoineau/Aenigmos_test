@@ -1,0 +1,109 @@
+/* Reset léger */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Fond général */
+body {
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Carte centrale */
+form {
+  background: #ffffff;
+  width: 100%;
+  max-width: 600px;
+  padding: 30px 35px;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* Titre */
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+/* Bloc question */
+div {
+  margin-bottom: 25px;
+}
+
+/* Texte de question */
+p {
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #444;
+}
+
+/* Radios */
+label {
+  display: block;
+  margin-bottom: 8px;
+  cursor: pointer;
+  color: #555;
+}
+
+input[type="radio"] {
+  margin-right: 8px;
+}
+
+/* Slider */
+input[type="range"] {
+  width: 100%;
+  margin-top: 8px;
+}
+
+/* Texte libre */
+textarea {
+  width: 100%;
+  min-height: 90px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  resize: vertical;
+  font-family: inherit;
+}
+
+/* Focus inputs */
+textarea:focus,
+input[type="range"]:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+/* Bouton */
+button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* Hover bouton */
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  form {
+    padding: 25px 20px;
+  }
+}

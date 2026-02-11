@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Questionnaire Python</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<h1>Questionnaire personnalisé</h1>
+
+<form method="POST">
+  {% for q in questions %}
+    <div>
+      <p>{{ q.question }}</p>
+
+      {% if q.type == "radio" %}
+        {% for opt in q.options %}
+          <label>
+            <input type="radio" name="q{{ q.id }}" value="{{ opt }}">
+            {{ opt }}
+          </label><br>
+        {% endfor %}
+      {% endif %}
+
+      {% if q.type == "scale" %}
+        <input type="range" min="{{ q.min }}" max="{{ q.max }}" name="q{{ q.id }}">
+      {% endif %}
+
+      {% if q.type == "text" %}
+        <textarea name="q{{ q.id }}"></textarea>
+      {% endif %}
+    </div>
+  {% endfor %}
+
+  <button type="submit">Envoyer</button>
+</form>
+
+</body>
+</html>
