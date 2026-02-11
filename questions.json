@@ -1,20 +1,20 @@
 [
   {
     "id": 1,
-    "question": "Quelle valeur te représente le plus ?",
+    "question": "Enigme 1",
     "type": "radio",
-    "options": ["Liberté", "Famille", "Ambition", "Créativité"]
+    "options": ["Toulouse", "Rouen", "Lyon", "Paris"]
   },
   {
     "id": 2,
-    "question": "À quel point l'argent est important pour toi ?",
+    "question": "Enigme 2",
     "type": "scale",
     "min": 1,
     "max": 5
   },
   {
     "id": 3,
-    "question": "Décris ta vie idéale",
+    "question": "Enigme 3",
     "type": "text"
   }
 ]

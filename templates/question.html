@@ -1,16 +1,34 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>{{ question.text }}</h2>
+<h1>Questionnaire Ultra Personnalisé</h1>
 
 <form method="POST">
-    {% for key, value in question.choices.items() %}
-        <div>
-            <input type="radio" name="answer" value="{{ key }}" required>
-            <label>{{ value }}</label>
-        </div>
-    {% endfor %}
-    <br>
-    <button type="submit">Suivant</button>
+
+  {% for q in questions %}
+    <div class="question-block">
+      <p><strong>{{ q.question }}</strong></p>
+
+      {% if q.type == "radio" %}
+        {% for option in q.options %}
+          <div>
+            <input type="radio" name="q{{ q.id }}" value="{{ option }}" required>
+            <label>{{ option }}</label>
+          </div>
+        {% endfor %}
+
+      {% elif q.type == "scale" %}
+        <input type="range" name="q{{ q.id }}" min="{{ q.min }}" max="{{ q.max }}" value="{{ q.min }}" oninput="this.nextElementSibling.value = this.value">
+        <output>{{ q.min }}</output>
+
+      {% elif q.type == "text" %}
+        <textarea name="q{{ q.id }}" rows="4" cols="50" required></textarea>
+      {% endif %}
+
+    </div>
+    <hr>
+  {% endfor %}
+
+  <button type="submit">Soumettre</button>
 </form>
 {% endblock %}
