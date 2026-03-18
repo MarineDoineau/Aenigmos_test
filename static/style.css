@@ -17,17 +17,48 @@ body {
     border-radius: 10px;
 }
 
-h1, h2 {
+h1 {
     color: #c9a24d;
 }
 
+/* Bloc question */
 .question-block {
     margin-bottom: 30px;
 }
 
-button {
+/* Ligne question + bouton indice */
+.question-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Question (couleur inversée) */
+.question-header p {
+    color: #31ac4a;
+    margin: 0;
+}
+
+/* Bouton indice discret */
+.indice-btn {
+    background-color: transparent;
+    color: #c9a24d;
+    border: 1px solid #c9a24d;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.indice-btn:hover {
     background-color: #c9a24d;
     color: #0b1c2d;
+}
+
+/* Bouton principal inversé */
+button[type="submit"] {
+    background-color: #31ac4a;
+    color: white;
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
@@ -35,11 +66,12 @@ button {
     font-weight: bold;
 }
 
-button:hover {
-    background-color: #31ac4a;
-    color: white;
+button[type="submit"]:hover {
+    background-color: #c9a24d;
+    color: #0b1c2d;
 }
 
+/* Inputs */
 input, textarea {
     width: 100%;
     padding: 10px;
@@ -50,11 +82,13 @@ input, textarea {
     color: #0b1c2d;
 }
 
+/* Indice */
 .indice {
     margin-top: 10px;
     padding: 10px;
-    background-color: #31ac4a;
-    color: white;
+    background-color: #e8dcc4;
+    color: #0b1c2d;
     border-radius: 5px;
     display: none;
+    font-size: 14px;
 }
