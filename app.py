@@ -20,7 +20,7 @@ SHEET_ID = "1N9ZXLVYHfz6giwu5C1xLFm1RFmFpK49UQNF0ff56Lds"  # remplace par l'ID d
 try:
     gc = gspread.service_account(filename=CREDS_FILE)
     sh = gc.open_by_key(SHEET_ID)
-    worksheet = sh.sheet1  # utiliser la première feuille
+    worksheet = sh.worksheet("Sheet1")  # utiliser la première feuille
 except Exception as e:
     print("Erreur de connexion Google Sheets :", e)
     worksheet = None  # pour éviter les crashs
