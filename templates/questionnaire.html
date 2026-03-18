@@ -13,7 +13,6 @@
   {% for q in questions %}
     <div class="question-block">
 
-      <!-- Ligne question + bouton indice -->
       <div class="question-header">
         <p class="question-title">{{ q.question }}</p>
 
@@ -24,11 +23,14 @@
         </button>
       </div>
 
-      <!-- Types de questions -->
       {% if q.type == "radio" %}
         {% for option in q.options %}
           <div>
-            <input type="radio" name="q{{ q.id }}" value="{{ option }}" required>
+            <input type="radio"
+                   name="q{{ q.id }}"
+                   value="{{ option }}"
+                   {% if answers[q.id|string] == option %}checked{% endif %}
+                   required>
             <label>{{ option }}</label>
           </div>
         {% endfor %}
@@ -38,17 +40,17 @@
                name="q{{ q.id }}"
                min="{{ q.min }}"
                max="{{ q.max }}"
-               value="{{ q.min }}"
+               value="{{ answers[q.id|string] if answers[q.id|string] else q.min }}"
                oninput="this.nextElementSibling.value = this.value">
-        <output>{{ q.min }}</output>
+
+        <output>{{ answers[q.id|string] if answers[q.id|string] else q.min }}</output>
 
       {% elif q.type == "text" %}
         <textarea name="q{{ q.id }}"
                   placeholder="{{ q.placeholder if q.placeholder else 'Votre réponse' }}"
-                  required></textarea>
+                  required>{{ answers[q.id|string] if answers[q.id|string] else '' }}</textarea>
       {% endif %}
 
-      <!-- Indice -->
       <div id="hint-{{ q.id }}" class="indice">
         {{ q.hint }}
       </div>

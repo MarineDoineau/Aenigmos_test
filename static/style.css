@@ -24,7 +24,7 @@ body {
 }
 
 .logo {
-    max-width: 120px;
+    max-width: 200px;
     height: auto;
 }
 
@@ -40,19 +40,17 @@ h1 {
     border-bottom: 1px solid #e8dcc4;
 }
 
-/* Ligne question + bouton */
+/* Ligne */
 .question-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
 }
 
 /* Question */
 .question-title {
     color: #c9a24d;
     margin: 0;
-    font-weight: 600;
 }
 
 /* Bouton indice */
@@ -66,10 +64,6 @@ h1 {
     font-size: 12px;
 }
 
-.indice-btn:hover {
-    opacity: 0.8;
-}
-
 /* Inputs */
 input, textarea {
     width: 100%;
@@ -81,21 +75,16 @@ input, textarea {
     color: #0b1c2d;
 }
 
-/* Bouton submit */
+/* Submit */
 button[type="submit"] {
-    background-color: #31ac4a;
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    width: 100%;
-}
-
-button[type="submit"]:hover {
     background-color: #c9a24d;
     color: #0b1c2d;
+    border: none;
+    padding: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-weight: bold;
 }
 
 /* Indice */
@@ -106,5 +95,4 @@ button[type="submit"]:hover {
     color: #0b1c2d;
     border-radius: 5px;
     display: none;
-    font-size: 14px;
 }

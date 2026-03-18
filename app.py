@@ -4,22 +4,23 @@ import json
 app = Flask(__name__)
 app.secret_key = "supersecretkey"
 
-# Charger les questions depuis le JSON
+# Charger les questions
 with open("questions.json", encoding="utf-8") as f:
     QUESTIONS = json.load(f)
 
 @app.route("/", methods=["GET", "POST"])
 def home():
     if request.method == "POST":
-        # Récupérer toutes les réponses
         answers = {}
         for q in QUESTIONS:
             answer = request.form.get(f"q{q['id']}")
             answers[str(q['id'])] = answer
+
         session['answers'] = answers
         return redirect(url_for("result"))
 
-    return render_template("questionnaire.html", questions=QUESTIONS)
+    answers = session.get('answers', {})
+    return render_template("questionnaire.html", questions=QUESTIONS, answers=answers)
 
 @app.route("/result")
 def result():
