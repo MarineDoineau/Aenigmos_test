@@ -1,24 +1,31 @@
-from flask import Flask, render_template, request, redirect, url_for, session, send_file
+from flask import Flask, render_template, request, redirect, url_for, session
 import json
-import csv
-import os
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
 
 app = Flask(__name__)
 app.secret_key = "supersecretkey"
 
-# Charger les questions
+# Charger les questions depuis le JSON
 with open("questions.json", encoding="utf-8") as f:
     QUESTIONS = json.load(f)
 
-CSV_FILE = "responses.csv"
+# --- Configuration Google Sheets ---
+SCOPE = ["https://spreadsheets.google.com/feeds",
+         "https://www.googleapis.com/auth/drive"]
+CREDS_FILE = "service_account.json"  # ton fichier JSON
+SHEET_ID = "1N9ZXLVYHfz6giwu5C1xLFm1RFmFpK49UQNF0ff56Lds"  # remplace par l'ID de ta Sheet
 
-# Créer le CSV avec entêtes si inexistant
-if not os.path.exists(CSV_FILE):
-    with open(CSV_FILE, "w", newline="", encoding="utf-8") as f:
-        writer = csv.writer(f)
-        headers = [f"Q{q['id']}" for q in QUESTIONS]
-        writer.writerow(headers)
+# Connexion à Google Sheets
+try:
+    gc = gspread.service_account(filename=CREDS_FILE)
+    sh = gc.open_by_key(SHEET_ID)
+    worksheet = sh.sheet1  # utiliser la première feuille
+except Exception as e:
+    print("Erreur de connexion Google Sheets :", e)
+    worksheet = None  # pour éviter les crashs
 
+# --- Route principale ---
 @app.route("/", methods=["GET", "POST"])
 def home():
     if request.method == "POST":
@@ -27,28 +34,34 @@ def home():
             answer = request.form.get(f"q{q['id']}")
             answers[str(q['id'])] = answer
 
+        # Stocker les réponses en session pour pré-remplissage
         session['answers'] = answers
 
-        # 🔥 Ajouter les réponses dans le CSV
-        with open(CSV_FILE, "a", newline="", encoding="utf-8") as f:
-            writer = csv.writer(f)
+        # Debug console
+        print("DEBUG answers:", answers)
+
+        # Envoyer dans Google Sheets
+        if worksheet:
             row = [answers.get(str(q['id']), "") for q in QUESTIONS]
-            writer.writerow(row)
+            try:
+                worksheet.append_row(row)
+                print("✅ Ligne ajoutée à Google Sheets")
+            except Exception as e:
+                print("Erreur Google Sheets:", e)
+        else:
+            print("⚠️ Worksheet non initialisé, réponses non envoyées")
 
         return redirect(url_for("result"))
 
+    # Pré-remplissage si déjà répondu
     answers = session.get('answers', {})
     return render_template("questionnaire.html", questions=QUESTIONS, answers=answers)
 
+# --- Page résultat ---
 @app.route("/result")
 def result():
     answers = session.get('answers', {})
     return render_template("result.html", answers=answers)
-
-# Route pour télécharger le CSV (optionnel)
-@app.route("/download")
-def download_csv():
-    return send_file(CSV_FILE, as_attachment=True)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000, debug=True)
