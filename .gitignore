@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environnement virtuel
+env/
+venv/
+
+# Fichiers secrets
+service_account.json
+
+# Autres fichiers temporaires
+*.log
+*.sqlite3

@@ -42,7 +42,6 @@
                max="{{ q.max }}"
                value="{{ answers[q.id|string] if answers[q.id|string] else q.min }}"
                oninput="this.nextElementSibling.value = this.value">
-
         <output>{{ answers[q.id|string] if answers[q.id|string] else q.min }}</output>
 
       {% elif q.type == "text" %}
