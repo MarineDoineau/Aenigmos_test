@@ -18,12 +18,30 @@
         {% endfor %}
 
       {% elif q.type == "scale" %}
-        <input type="range" name="q{{ q.id }}" min="{{ q.min }}" max="{{ q.max }}" value="{{ q.min }}" oninput="this.nextElementSibling.value = this.value">
+        <input type="range"
+               name="q{{ q.id }}"
+               min="{{ q.min }}"
+               max="{{ q.max }}"
+               value="{{ q.min }}"
+               oninput="this.nextElementSibling.value = this.value">
         <output>{{ q.min }}</output>
 
       {% elif q.type == "text" %}
-        <textarea name="q{{ q.id }}" rows="4" cols="50" required></textarea>
+        <textarea name="q{{ q.id }}"
+                  placeholder="{{ q.placeholder if q.placeholder else 'Votre réponse...' }}"
+                  required></textarea>
       {% endif %}
+
+      <!-- Bouton indice -->
+      <br>
+      <button type="button" onclick="toggleHint({{ q.id }})">
+        Indice
+      </button>
+
+      <!-- Zone indice -->
+      <div id="hint-{{ q.id }}" class="indice">
+        {{ q.hint }}
+      </div>
 
     </div>
     <hr>
@@ -31,4 +49,12 @@
 
   <button type="submit">Soumettre</button>
 </form>
+
+<script>
+function toggleHint(id) {
+    const hint = document.getElementById("hint-" + id);
+    hint.style.display = hint.style.display === "none" ? "block" : "none";
+}
+</script>
+
 {% endblock %}
