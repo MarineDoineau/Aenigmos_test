@@ -2,64 +2,62 @@
 
 {% block content %}
 
+<div class="logo-container">
+    <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo">
+</div>
+
 <h1>Questionnaire Ultra Personnalisé</h1>
 
 <form method="POST">
 
-{% for q in questions %} <div class="question-block">
+  {% for q in questions %}
+    <div class="question-block">
 
-```
-  <!-- Ligne question + bouton indice -->
-  <div class="question-header">
-    <p><strong>{{ q.question }}</strong></p>
+      <!-- Ligne question + bouton indice -->
+      <div class="question-header">
+        <p class="question-title">{{ q.question }}</p>
 
-    <button type="button"
-            class="indice-btn"
-            onclick="toggleHint({{ q.id }})">
-      Indice
-    </button>
-  </div>
-
-  <!-- Types de questions -->
-  {% if q.type == "radio" %}
-    {% for option in q.options %}
-      <div>
-        <input type="radio" name="q{{ q.id }}" value="{{ option }}" required>
-        <label>{{ option }}</label>
+        <button type="button"
+                class="indice-btn"
+                onclick="toggleHint({{ q.id }})">
+          Indice
+        </button>
       </div>
-    {% endfor %}
 
-  {% elif q.type == "scale" %}
-    <input type="range"
-           name="q{{ q.id }}"
-           min="{{ q.min }}"
-           max="{{ q.max }}"
-           value="{{ q.min }}"
-           oninput="this.nextElementSibling.value = this.value">
-    <output>{{ q.min }}</output>
+      <!-- Types de questions -->
+      {% if q.type == "radio" %}
+        {% for option in q.options %}
+          <div>
+            <input type="radio" name="q{{ q.id }}" value="{{ option }}" required>
+            <label>{{ option }}</label>
+          </div>
+        {% endfor %}
 
-  {% elif q.type == "text" %}
-    <textarea name="q{{ q.id }}"
-              placeholder="{{ q.placeholder if q.placeholder else 'Votre réponse...' }}"
-              required></textarea>
-  {% endif %}
+      {% elif q.type == "scale" %}
+        <input type="range"
+               name="q{{ q.id }}"
+               min="{{ q.min }}"
+               max="{{ q.max }}"
+               value="{{ q.min }}"
+               oninput="this.nextElementSibling.value = this.value">
+        <output>{{ q.min }}</output>
 
-  <!-- Zone indice -->
-  <div id="hint-{{ q.id }}" class="indice">
-    {{ q.hint }}
-  </div>
+      {% elif q.type == "text" %}
+        <textarea name="q{{ q.id }}"
+                  placeholder="{{ q.placeholder if q.placeholder else 'Votre réponse' }}"
+                  required></textarea>
+      {% endif %}
 
-</div>
-<hr>
-```
+      <!-- Indice -->
+      <div id="hint-{{ q.id }}" class="indice">
+        {{ q.hint }}
+      </div>
 
-{% endfor %}
+    </div>
+  {% endfor %}
 
-<button type="submit">Soumettre</button>
-
+  <button type="submit">Soumettre</button>
 </form>
-
-<!-- Script pour afficher/cacher les indices -->
 
 <script>
 function toggleHint(id) {
