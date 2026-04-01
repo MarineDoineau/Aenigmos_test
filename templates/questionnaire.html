@@ -2,7 +2,90 @@
 <html>
 <head>
 
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<meta charset="UTF-8">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+font-family:'Josefin Sans',sans-serif;
+background:#0b1c2d;
+color:white;
+padding:40px;
+}
+
+.container{
+max-width:800px;
+margin:auto;
+}
+
+.logo{
+display:block;
+margin:auto;
+width:300px;
+margin-bottom:40px;
+}
+
+.question-block{
+margin-bottom:35px;
+}
+
+.question-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.question-header h3{
+color:#c9a24d;
+font-size:24px;
+margin:0;
+}
+
+.hint-btn{
+background:#e8dcc4;
+border:none;
+padding:6px 12px;
+cursor:pointer;
+font-family:'Josefin Sans',sans-serif;
+}
+
+.hint-box{
+font-style:italic;
+font-size:16px;
+margin-top:8px;
+color:#e8dcc4;
+}
+
+input[type=text]{
+width:100%;
+padding:10px;
+margin-top:10px;
+}
+
+label{
+display:block;
+margin-top:8px;
+}
+
+hr{
+border:0;
+border-top:1px solid #e8dcc4;
+margin-top:30px;
+}
+
+.submit-btn{
+background:#c9a24d;
+border:none;
+padding:12px 25px;
+font-size:18px;
+cursor:pointer;
+margin-top:20px;
+}
+
+</style>
 
 </head>
 
@@ -24,7 +107,7 @@
 
 <h3>{{ q.question }}</h3>
 
-<div class="hint-buttons">
+<div>
 
 {% if q.hint1 %}
 <button type="button" class="hint-btn"
@@ -54,25 +137,11 @@ Indice 3
 {% endif %}
 
 </div>
+
 </div>
 
-{% if q.hint1 %}
-<div id="hint1{{q.id}}" class="hint-box" style="display:none;">
-{{q.hint1}}
-</div>
-{% endif %}
 
-{% if q.hint2 %}
-<div id="hint2{{q.id}}" class="hint-box" style="display:none;">
-{{q.hint2}}
-</div>
-{% endif %}
-
-{% if q.hint3 %}
-<div id="hint3{{q.id}}" class="hint-box" style="display:none;">
-{{q.hint3}}
-</div>
-{% endif %}
+<!-- Réponses -->
 
 {% if q.type == "radio" %}
 
@@ -91,6 +160,7 @@ value="{{option}}"
 
 {% endif %}
 
+
 {% if q.type == "scale" %}
 
 <input type="range"
@@ -101,6 +171,7 @@ value="{{answers.get(q.id|string, q.min)}}">
 
 {% endif %}
 
+
 {% if q.type == "text" %}
 
 <input type="text"
@@ -108,6 +179,27 @@ name="q{{q.id}}"
 value="{{answers.get(q.id|string,'')}}"
 placeholder="Ta réponse">
 
+{% endif %}
+
+
+<!-- Indices -->
+
+{% if q.hint1 %}
+<div id="hint1{{q.id}}" class="hint-box" style="display:none;">
+{{q.hint1}}
+</div>
+{% endif %}
+
+{% if q.hint2 %}
+<div id="hint2{{q.id}}" class="hint-box" style="display:none;">
+{{q.hint2}}
+</div>
+{% endif %}
+
+{% if q.hint3 %}
+<div id="hint3{{q.id}}" class="hint-box" style="display:none;">
+{{q.hint3}}
+</div>
 {% endif %}
 
 <hr>
@@ -132,22 +224,24 @@ function showHint(questionId, level){
 
 let hint = document.getElementById("hint"+level+questionId);
 
-hint.style.display = "block";
+hint.style.display="block";
 
 hintsCount++;
 
 document.getElementById("hints_used").value = hintsCount;
 
-if(level === 1){
+if(level===1){
 
-let btn2 = document.getElementById("hint2btn"+questionId);
+let btn2=document.getElementById("hint2btn"+questionId);
+
 if(btn2){btn2.style.display="inline-block"}
 
 }
 
-if(level === 2){
+if(level===2){
 
-let btn3 = document.getElementById("hint3btn"+questionId);
+let btn3=document.getElementById("hint3btn"+questionId);
+
 if(btn3){btn3.style.display="inline-block"}
 
 }
