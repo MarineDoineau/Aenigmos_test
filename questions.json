@@ -39,6 +39,7 @@
     "type": "text",
     "placeholder": "Couleur",
     "hint": "Couleur des cheveux de Clément"
+  },
   {
     "id": 7,
     "question": "Enigme 7",
