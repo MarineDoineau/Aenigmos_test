@@ -112,7 +112,7 @@ margin-top:20px;
 {% if q.hint1 %}
 <button type="button" class="hint-btn"
 onclick="showHint({{q.id}},1)">
-Indice
+Indice 1
 </button>
 {% endif %}
 
@@ -141,6 +141,7 @@ Indice 3
 </div>
 
 
+
 <!-- Réponses -->
 
 {% if q.type == "radio" %}
@@ -161,6 +162,35 @@ value="{{option}}"
 {% endif %}
 
 
+{% if q.type == "text" %}
+
+<input type="text"
+name="q{{q.id}}"
+value="{{answers.get(q.id|string,'')}}"
+placeholder="{{q.placeholder}}">
+
+{% endif %}
+
+
+{% if q.type == "number" %}
+
+<input type="number"
+name="q{{q.id}}"
+value="{{answers.get(q.id|string,'')}}"
+placeholder="{{q.placeholder}}">
+
+{% endif %}
+
+
+{% if q.type == "date" %}
+
+<input type="date"
+name="q{{q.id}}"
+value="{{answers.get(q.id|string,'')}}">
+
+{% endif %}
+
+
 {% if q.type == "scale" %}
 
 <input type="range"
@@ -168,16 +198,6 @@ name="q{{q.id}}"
 min="{{q.min}}"
 max="{{q.max}}"
 value="{{answers.get(q.id|string, q.min)}}">
-
-{% endif %}
-
-
-{% if q.type == "text" %}
-
-<input type="text"
-name="q{{q.id}}"
-value="{{answers.get(q.id|string,'')}}"
-placeholder="Ta réponse">
 
 {% endif %}
 
