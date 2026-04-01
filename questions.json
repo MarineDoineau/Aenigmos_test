@@ -4,7 +4,9 @@
     "question": "Enigme 1",
     "type": "text",
     "placeholder": "Ex: vous êtes vraiment des gens trop cools...",
-    "hint": "Nous recherchons une adresse."
+    "hint1": "Nous recherchons une adresse.",
+    "hint2": "Nous recherchons notre adresse.",
+    "hint3": "Nous habitons Villeneuve Tolosane."
   },
   {
     "id": 2,

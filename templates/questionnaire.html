@@ -1,70 +1,160 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html>
+<head>
 
-{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
-<div class="logo-container">
-    <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo">
-</div>
+</head>
 
-<h1>Questionnaire Ultra Personnalisé</h1>
+<body>
+
+<div class="container">
+
+<img src="{{ url_for('static', filename='logo.png') }}" class="logo">
 
 <form method="POST">
 
-  {% for q in questions %}
-    <div class="question-block">
+<input type="hidden" name="hints_used" id="hints_used" value="0">
 
-      <div class="question-header">
-        <p class="question-title">{{ q.question }}</p>
+{% for q in questions %}
 
-        <button type="button"
-                class="indice-btn"
-                onclick="toggleHint({{ q.id }})">
-          Indice
-        </button>
-      </div>
+<div class="question-block">
 
-      {% if q.type == "radio" %}
-        {% for option in q.options %}
-          <div>
-            <input type="radio"
-                   name="q{{ q.id }}"
-                   value="{{ option }}"
-                   {% if answers[q.id|string] == option %}checked{% endif %}
-                   required>
-            <label>{{ option }}</label>
-          </div>
-        {% endfor %}
+<div class="question-header">
 
-      {% elif q.type == "scale" %}
-        <input type="range"
-               name="q{{ q.id }}"
-               min="{{ q.min }}"
-               max="{{ q.max }}"
-               value="{{ answers[q.id|string] if answers[q.id|string] else q.min }}"
-               oninput="this.nextElementSibling.value = this.value">
-        <output>{{ answers[q.id|string] if answers[q.id|string] else q.min }}</output>
+<h3>{{ q.question }}</h3>
 
-      {% elif q.type == "text" %}
-        <textarea name="q{{ q.id }}"
-                  placeholder="{{ q.placeholder if q.placeholder else 'Votre réponse' }}"
-                  required>{{ answers[q.id|string] if answers[q.id|string] else '' }}</textarea>
-      {% endif %}
+<div class="hint-buttons">
 
-      <div id="hint-{{ q.id }}" class="indice">
-        {{ q.hint }}
-      </div>
+{% if q.hint1 %}
+<button type="button" class="hint-btn"
+onclick="showHint({{q.id}},1)">
+Indice
+</button>
+{% endif %}
 
-    </div>
-  {% endfor %}
+{% if q.hint2 %}
+<button type="button"
+id="hint2btn{{q.id}}"
+class="hint-btn"
+style="display:none"
+onclick="showHint({{q.id}},2)">
+Indice 2
+</button>
+{% endif %}
 
-  <button type="submit">Soumettre</button>
+{% if q.hint3 %}
+<button type="button"
+id="hint3btn{{q.id}}"
+class="hint-btn"
+style="display:none"
+onclick="showHint({{q.id}},3)">
+Indice 3
+</button>
+{% endif %}
+
+</div>
+</div>
+
+{% if q.hint1 %}
+<div id="hint1{{q.id}}" class="hint-box" style="display:none;">
+{{q.hint1}}
+</div>
+{% endif %}
+
+{% if q.hint2 %}
+<div id="hint2{{q.id}}" class="hint-box" style="display:none;">
+{{q.hint2}}
+</div>
+{% endif %}
+
+{% if q.hint3 %}
+<div id="hint3{{q.id}}" class="hint-box" style="display:none;">
+{{q.hint3}}
+</div>
+{% endif %}
+
+{% if q.type == "radio" %}
+
+{% for option in q.options %}
+
+<label>
+<input type="radio"
+name="q{{q.id}}"
+value="{{option}}"
+{% if answers.get(q.id|string) == option %}checked{% endif %}
+>
+{{option}}
+</label>
+
+{% endfor %}
+
+{% endif %}
+
+{% if q.type == "scale" %}
+
+<input type="range"
+name="q{{q.id}}"
+min="{{q.min}}"
+max="{{q.max}}"
+value="{{answers.get(q.id|string, q.min)}}">
+
+{% endif %}
+
+{% if q.type == "text" %}
+
+<input type="text"
+name="q{{q.id}}"
+value="{{answers.get(q.id|string,'')}}"
+placeholder="Ta réponse">
+
+{% endif %}
+
+<hr>
+
+</div>
+
+{% endfor %}
+
+<button type="submit" class="submit-btn">
+Soumettre
+</button>
+
 </form>
 
+</div>
+
 <script>
-function toggleHint(id) {
-    const hint = document.getElementById("hint-" + id);
-    hint.style.display = hint.style.display === "none" ? "block" : "none";
+
+let hintsCount = 0;
+
+function showHint(questionId, level){
+
+let hint = document.getElementById("hint"+level+questionId);
+
+hint.style.display = "block";
+
+hintsCount++;
+
+document.getElementById("hints_used").value = hintsCount;
+
+if(level === 1){
+
+let btn2 = document.getElementById("hint2btn"+questionId);
+if(btn2){btn2.style.display="inline-block"}
+
 }
+
+if(level === 2){
+
+let btn3 = document.getElementById("hint3btn"+questionId);
+if(btn3){btn3.style.display="inline-block"}
+
+}
+
+}
+
 </script>
 
-{% endblock %}
+</body>
+</html>
