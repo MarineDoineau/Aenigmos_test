@@ -9,7 +9,7 @@ app.secret_key = "secret"
 with open("questions.json", encoding="utf-8") as f:
     QUESTIONS = json.load(f)
 
-SHEET_ID = "TON_ID_DE_SHEET"
+SHEET_ID = "1N9ZXLVYHfz6giwu5C1xLFm1RFmFpK49UQNF0ff56Lds"
 
 gc = gspread.service_account(filename="service_account.json")
 sh = gc.open_by_key(SHEET_ID)
